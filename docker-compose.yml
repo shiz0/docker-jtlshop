@@ -1,0 +1,48 @@
+version: '3.5'
+services:
+
+  httpd:
+    image: ${WEBIMG}
+    depends_on:
+      - sql
+      - php-fpm
+    ports:
+      - '80:80'
+    volumes:
+      - ./conf/my-httpd.conf:/usr/local/apache2/conf/httpd.conf:ro,z
+      - ./public/:/usr/local/apache2/htdocs:ro,z
+    networks:
+      php-fpm:
+        aliases:
+          - httpd
+
+  php-fpm:
+    image: ${FPMIMG}
+    depends_on:
+      - sql
+    volumes:
+      - ./conf/my-httpd.conf:/usr/local/apache2/conf/httpd.conf:ro,z
+      - ./conf/php_jtlshop4.ini:/usr/local/etc/php/conf.d/php_jtlshop4.ini:ro,z
+      - ./public/:/usr/local/apache2/htdocs:ro,z
+    networks:
+      sql:
+        aliases:
+          - php
+      php-fpm:
+        aliases:
+          - php
+  
+  sql:
+    image: ${SQLIMG}
+    volumes:
+      - ./mysql/:/var/lib/mysql:Z
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT}
+    networks:
+      sql:
+        aliases:
+          - sql
+
+networks:
+  php-fpm:
+  sql:
