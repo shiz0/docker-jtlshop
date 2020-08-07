@@ -37,7 +37,10 @@ services:
     volumes:
       - ./mysql/:/var/lib/mysql:Z
     environment:
-      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT}
+      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PW}
+      - MYSQL_DATABASE=${SQL_DB}
+      - MYSQL_USER=${SQL_USER}
+      - MYSQL_PASSWORD=${SQL_PW}
     networks:
       sql:
         aliases:
