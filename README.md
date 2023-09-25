@@ -1,2 +1,2 @@
 # docker-jtlshop
-master is for dev/play, images are built from branches
+for running jtlshop5 on php7.4
