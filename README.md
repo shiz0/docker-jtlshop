@@ -1,2 +1,2 @@
 # docker-jtlshop
-for running jtlshop5 on php7.4
+for running jtlshop5 on php8.2
